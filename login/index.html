@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="head">
+        <div class="btns">
+            <div class="logo">
+                <img src="https://souviknandi2004.github.io/favicon.ico"
+                    alt="" srcset="">
+            </div>
+            <button  style="background-color: #1853db;color: white;" id="logp">Login</button>
+            <button style="background-color: #1853db;color: white;" id="signp">New User Registration</button>
+        </div>
+    </div>
+</body>
+
+</html>
+<script>
+    const element = document.getElementById("logp")
+    element.addEventListener("click", vbn)
+
+    const element2 = document.getElementById("signp")
+    element2.addEventListener("click", vbn2)
+
+    function vbn() {
+        window.open("index3.html", "_self")
+        localStorage.setItem("dbcnm", "213183100301")
+    }
+    function vbn2() {
+        window.open("index3.html", "_self")
+        localStorage.setItem("dbcnm", "213434484839")
+    }
+</script>
+<style>
+    body {
+        margin: 0px;
+    }
+
+    .head {
+        display: flex;
+        justify-content: center;
+        /* Horizontally center the content */
+        align-items: center;
+        /* Vertically center the content */
+        height: 100vh;
+        /* Set a height to center vertically within the viewport */
+    }
+
+    .btns {
+        text-align: center;
+        /* Center the button text within the div */
+    }
+
+    .btns button {
+        display: block;
+        margin: auto;
+        margin-top: 20px;
+        font-weight: 500;
+        white-space: nowrap;
+        text-align: center;
+        background-image: none;
+        border: 1px solid transparent;
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 1px 0 rgba(0, 0, 0, 0.025);
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+        -webkit-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        touch-action: manipulation;
+        padding: 14px 14px;
+        font-size: 18px;
+        border-radius: 4px;
+        color: rgba(0, 0, 0, 0.85);
+        /* background: #fff; */
+        /* border-color: #d9d9d9; */
+        width: -webkit-fill-available;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+
+    .logo img {
+        border-radius: 10px;
+        border: 1px solid transparent;
+        background-color: #d9d9d9;
+        margin-bottom: 40px;
+        width: 130px;
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 1px 0 rgba(0, 0, 0, 0.025);
+    }
+</style>

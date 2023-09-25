@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    <p
+        style="text-align: center;color: rgb(0, 0, 0);font-size: 26px;border-bottom: 3px solid #1472ff;width: fit-content;margin: auto;margin-top: 10px;padding: 5px 5px;">
+        Finish Setup</p>
+    <div class="main">
+        <div class="reai" id="reai">
+            <p>First Name</p>
+            <div class="lp"><input type="text" id="first-name" placeholder="Type Here..." required></div>
+            <p>Last Name</p>
+            <div class="lp"><input type="text" name="" id="last-name" placeholder="Type Here..." required></div>
+        </div>
+        <div style="display: none;" class="oiu" id="oiu">
+            <p>Upload A Photo</p>
+            <div class="lp"><input type="file" id="fileInput" required></div>
+            <div id="output"></div>
+        </div>
+        <button id="nextbtn">Next</button>
+        <button style="display: none;" id="finishbtn">Finish</button>
+    </div>
+    <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-storage.js"></script>
+    <script src="/userdetails/526.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyAxU8cccikUyN7dYG4ToBtq2dhq7VKyC4U",
+            authDomain: "disunicchatserver.firebaseapp.com",
+            databaseURL: "https://disunicchatserver-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "disunicchatserver",
+            storageBucket: "disunicchatserver.appspot.com",
+            messagingSenderId: "549278183688",
+            appId: "1:549278183688:web:f01699782119c2b895fcbd",
+            measurementId: "G-5EBC07JFJP"
+        };
+
+        // firebase.initializeApp(firebaseConfig);
+
+        // const database = firebase.database();
+        // const storage = firebase.storage();
+
+        // const fileInput = document.getElementById('fileInput');
+        // const output = document.getElementById('output');
+
+        // fileInput.addEventListener('change', handleFileSelect, false);
+
+        // function handleFileSelect(evt) {
+        //     const file = evt.target.files[0];
+        //     const reader = new FileReader();
+        //     reader.onload = function (event) {
+        //         const base64String = event.target.result.split(',')[1];
+        //         uploadImageToFirebase(base64String);
+        //     };
+        //     reader.readAsDataURL(file);
+        // }
+
+        // function uploadImageToFirebase(base64String) {
+        //     const imagesRef = database.ref('images/').push();
+        //     // const fileName = `${Date.now()}.jpg`;
+        //     const fileName = `${localStorage.getItem("userId")}.jpg`;
+        //     const storageRef = storage.ref().child(fileName);
+        //     const uploadTask = storageRef.putString(base64String, 'base64');
+
+        //     uploadTask.on('state_changed', (snapshot) => {
+        //         // Show the upload progress to the user
+        //         const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        //         output.innerHTML = `Uploading... ${progress.toFixed(2)}%`;
+        //     }, (error) => {
+        //         // Handle errors during the upload
+        //         console.error(error);
+        //         output.innerHTML = `Error: ${error.message}`;
+        //     }, () => {
+        //         // Get the download URL of the uploaded image
+        //         uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+        //             // Save the download URL to the database
+        //             imagesRef.set({
+        //                 image: downloadURL
+        //             }).then(() => {
+        //                 // Show the download URL to the user
+        //                 // output.innerHTML = `Download URL: <a href="${downloadURL}" target="_blank">${downloadURL}</a>`;
+        //                 output.innerHTML = `<img src="${downloadURL}"></img>`
+        //                 localStorage.setItem("userlogo", downloadURL)
+        //                 uploaduserlogo();
+        //                 getlogofromdb()
+
+        //                 document.getElementById("finishbtn").setAttribute("onclick", "finishsingupprosses()")
+        //             }).catch((error) => {
+        //                 // Handle errors during the database write
+        //                 console.error(error);
+        //                 output.innerHTML = `Error: ${error.message}`;
+        //             });
+        //         });
+        //     });
+        // }
+
+
+        firebase.initializeApp(firebaseConfig);
+
+        const database = firebase.database();
+        const storage = firebase.storage();
+
+        const fileInput = document.getElementById('fileInput');
+        const output = document.getElementById('output');
+
+        fileInput.addEventListener('change', handleFileSelect, false);
+
+        function handleFileSelect(evt) {
+            const file = evt.target.files[0];
+            const reader = new FileReader();
+            reader.onload = function (event) {
+                const base64String = event.target.result.split(',')[1];
+                compressImage(base64String);
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function compressImage(base64String) {
+            const maxSizeInBytes = 50 * 1024; // 50KB
+            const image = new Image();
+
+            image.onload = function () {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+
+                // Calculate the new dimensions to maintain the aspect ratio while reducing file size
+                let maxWidth = 300; // Set your desired maximum width here
+                let maxHeight = 300; // Set your desired maximum height here
+                let newWidth = image.width;
+                let newHeight = image.height;
+
+                if (image.width > maxWidth) {
+                    newWidth = maxWidth;
+                    newHeight = (image.height * maxWidth) / image.width;
+                }
+
+                if (newHeight > maxHeight) {
+                    newWidth = (newWidth * maxHeight) / newHeight;
+                    newHeight = maxHeight;
+                }
+
+                canvas.width = newWidth;
+                canvas.height = newHeight;
+
+                ctx.drawImage(image, 0, 0, newWidth, newHeight);
+
+                // Convert the canvas content to a JPEG with a specific quality
+                const quality = 0.7; // Adjust the quality as needed (0.0 - 1.0)
+                const compressedBase64 = canvas.toDataURL('image/jpeg', quality);
+
+                // Check if the compressed file size is within the desired range
+                if (compressedBase64.length <= maxSizeInBytes) {
+                    // Call the uploadImageToFirebase function with the compressed data
+                    uploadImageToFirebase(compressedBase64);
+                } else {
+                    alert('The compressed image is still too large.');
+                }
+            };
+
+            image.src = 'data:image/jpeg;base64,' + base64String;
+        }
+
+        function uploadImageToFirebase(compressedBase64) {
+            const imagesRef = database.ref('images/').push();
+            const fileName = `${localStorage.getItem("userId")}.jpg`;
+            const storageRef = storage.ref().child(fileName);
+            const uploadTask = storageRef.putString(compressedBase64, 'data_url');
+
+            uploadTask.on('state_changed', (snapshot) => {
+                // Show the upload progress to the user
+                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                output.innerHTML = `Uploading... ${progress.toFixed(2)}%`;
+            }, (error) => {
+                // Handle errors during the upload
+                console.error(error);
+                output.innerHTML = `Error: ${error.message}`;
+            }, () => {
+                // Get the download URL of the uploaded image
+                uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+                    // Save the download URL to the database
+                    imagesRef.set({
+                        image: downloadURL
+                    }).then(() => {
+                        // Show the download URL to the user
+                        output.innerHTML = `<img src="${downloadURL}"></img>`
+                        localStorage.setItem("userlogo", downloadURL)
+                        uploaduserlogo();
+                        getlogofromdb()
+
+                        document.getElementById("finishbtn").setAttribute("onclick", "finishsingupprosses()")
+                    }).catch((error) => {
+                        // Handle errors during the database write
+                        console.error(error);
+                        output.innerHTML = `Error: ${error.message}`;
+                    });
+                });
+            });
+        }
+    </script>
+</body>
+<script>
+    if (localStorage.getItem("userlogo") === null) {
+        error
+    }
+    else {
+        document.getElementById("finishbtn").setAttribute("onclick", "finishsingupprosses()")
+    }
+    // document.getElementById("finishbtn").setAttribute("onclick", "finishsingupprosses()")
+    function finishsingupprosses() {
+        if (document.getElementById("first-name").value === "") {
+            console.log("error")
+        }
+        else if (document.getElementById("last-name").value === "") {
+            console.log("error")
+        }
+        else {
+            window.open("/chat/index.html", "_self")
+        }
+    }
+</script>
+<script>
+    document.getElementById("nextbtn").addEventListener("click", euir)
+
+    function euir() {
+        if (document.getElementById("first-name").value === "") {
+            console.log("error")
+        }
+        else if (document.getElementById("last-name").value === "") {
+            console.log("error")
+        }
+        else {
+            document.getElementById("oiu").style.display = "block"
+            document.getElementById("finishbtn").style.display = "block"
+            document.getElementById("nextbtn").style.display = "none"
+            document.getElementById("reai").style.display = "none"
+        }
+    }
+</script>
+
+</html>
+<style>
+    .lp {
+        display: flex;
+    }
+
+    input {
+        width: 100%;
+        padding: 10px 10px;
+        border: none;
+        background: #fff;
+        box-shadow: 0 1px 6px rgb(32 33 36 / 28%);
+        border: none;
+        font-size: 16px;
+        border-radius: 5px;
+        outline: 0;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+
+    #output {
+        color: rgb(0, 0, 0);
+        text-align: center;
+        margin-top: 30px;
+    }
+
+    #output img {
+        width: 100px;
+        border-radius: 10px;
+    }
+
+    body {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        font-weight: 600;
+        margin: 0px;
+        background: #f0f0f0;
+    }
+
+    .main {
+        text-align: left;
+        width: 80%;
+        margin: auto;
+        margin-top: 20px;
+        background: white;
+        border-radius: 5px;
+        padding: 10px 20px 30px 20px;
+    }
+
+    .main p {
+        font-size: 16px;
+        font-weight: 600;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+
+    #nextbtn,
+    #finishbtn {
+        display: block;
+        margin: auto;
+        margin-top: 25px;
+        font-weight: 500;
+        white-space: nowrap;
+        text-align: center;
+        background-image: none;
+        border: 1px solid transparent;
+        box-shadow: 0 1px 6px rgb(32 33 36 / 28%);
+        /* box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 1px 0 rgba(0, 0, 0, 0.025); */
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+        -webkit-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        touch-action: manipulation;
+        padding: 10px 10px;
+        font-size: 18px;
+        border-radius: 4px;
+        color: rgba(255, 255, 255, 0.85);
+        background: #1853db;
+        border-color: #1853db;
+        width: -webkit-fill-available;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+
+    #fileInput {
+        border-bottom: 0px solid;
+    }
+
+    @media (min-width: 500px) {
+        .main {
+            width: 80% !important;
+        }
+    }
+
+    @media (min-width: 600px) {
+        .main {
+            width: 70% !important;
+        }
+    }
+
+    @media (min-width: 700px) {
+        .main {
+            width: 50% !important;
+        }
+    }
+
+    @media (min-width: 800px) {
+        .main {
+            width: 50% !important;
+        }
+    }
+
+    @media (min-width: 900px) {
+        .main {
+            width: 40% !important;
+        }
+    }
+
+    @media (min-width: 1000px) {
+        .main {
+            width: 40% !important;
+        }
+    }
+
+    @media (min-width: 1100px) {
+        .main {
+            width: 40% !important;
+        }
+    }
+
+    @media (min-width: 1200px) {
+        .main {
+            width: 40% !important;
+        }
+    }
+
+    @media (min-width: 1300px) {
+        .main {
+            width: 40% !important;
+        }
+    }
+
+    @media (min-width: 1400px) {
+        .main {
+            width: 40% !important;
+        }
+    }
+
+    @media (min-width: 1500px) {
+        .main {
+            width: 40% !important;
+        }
+    }
+
+    @media (min-width: 1600px) {
+        .main {
+            width: 40% !important;
+        }
+    }
+</style>
