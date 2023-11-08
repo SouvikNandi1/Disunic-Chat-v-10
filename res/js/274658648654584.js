@@ -3,6 +3,25 @@ function rio() {
         scrollToBottom()
     }, 10)
 }
+function dklde() {
+    if(document.querySelector("#messages div:first-child") === null){
+        console.log("none")
+    }
+    else {
+        opih()
+    }
+}
+function opih(){
+    if (document.querySelector("#messages div:first-child").className === "sent") {
+        document.querySelectorAll('.sent')[0].style.marginTop = '86px'
+        document.querySelectorAll('.sent')[0].style.transition= '1s'
+        document.querySelectorAll('.sent')[0].style.animation="kdlori 1s"
+    }
+    else if (document.querySelector("#messages div:first-child").className === "received") {
+        document.querySelectorAll('.received')[0].style.marginTop = '86px';
+        document.querySelectorAll('.sent').style.transition="1s"
+    }
+}
 firebase.initializeApp(firebaseConfig);
 
 const db = firebase.database();
@@ -57,11 +76,13 @@ function displayMessage(snapshot) {
     const hours = date.getHours();
     const minutes = date.getMinutes();
     const seconds = date.getSeconds();
-    const formattedDateTime = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')} ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    const ampm = hours >= 12 ? "PM" : "AM";
+
+
+    const formattedDateTime = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')} ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')} ${ampm}`;
     console.log(formattedDateTime);
 
-
-
+    
     if (isCurrentUserSender) {
         messageDiv.className = "sent";
         messageDiv.innerHTML = `
@@ -70,9 +91,15 @@ function displayMessage(snapshot) {
     } else {
         messageDiv.className = "received";
         messageDiv.innerHTML = `
-            <p class="message-text">${messageData.message},<a>${formattedDateTime}</a></p>
+            <p class="message-text">${messageData.message}<a>${formattedDateTime}</a></p>
         `;
         rio()
+        setTimeout(() => {
+            dklde()
+        }, 100);
+        
+        
+
     }
     document.getElementById("messages").appendChild(messageDiv);
     document.getElementById("messages").scrollIntoView(false);

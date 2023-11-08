@@ -3,11 +3,16 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        :root {
+            background: #1f2533;
+        }
+    </style>
 </head>
 
 <body>
     <p
-        style="text-align: center;color: rgb(0, 0, 0);font-size: 26px;border-bottom: 3px solid #1472ff;width: fit-content;margin: auto;margin-top: 10px;padding: 5px 5px;">
+        style="text-align: center;color: rgb(255, 255, 255);font-size: 26px;border-bottom: 3px solid #1472ff;width: fit-content;margin: auto;margin-top: 10px;padding: 5px 5px;">
         Finish Setup</p>
     <div class="main">
         <div class="reai" id="reai">
@@ -121,7 +126,7 @@
         }
 
         function compressImage(base64String) {
-            const maxSizeInBytes = 50 * 1024; // 50KB
+            const maxSizeInBytes = 1000 * 1024; // 50KB
             const image = new Image();
 
             image.onload = function () {
@@ -129,8 +134,8 @@
                 const ctx = canvas.getContext('2d');
 
                 // Calculate the new dimensions to maintain the aspect ratio while reducing file size
-                let maxWidth = 300; // Set your desired maximum width here
-                let maxHeight = 300; // Set your desired maximum height here
+                let maxWidth = 1000; // Set your desired maximum width here
+                let maxHeight = 1000; // Set your desired maximum height here
                 let newWidth = image.width;
                 let newHeight = image.height;
 
@@ -150,7 +155,7 @@
                 ctx.drawImage(image, 0, 0, newWidth, newHeight);
 
                 // Convert the canvas content to a JPEG with a specific quality
-                const quality = 0.7; // Adjust the quality as needed (0.0 - 1.0)
+                const quality = 1.0; // Adjust the quality as needed (0.0 - 1.0)
                 const compressedBase64 = canvas.toDataURL('image/jpeg', quality);
 
                 // Check if the compressed file size is within the desired range
@@ -247,22 +252,31 @@
     .lp {
         display: flex;
     }
+    ::placeholder{
+        color: white;
+    }
 
     input {
         width: 100%;
         padding: 10px 10px;
         border: none;
-        background: #fff;
+        background: #1f2533;
         box-shadow: 0 1px 6px rgb(32 33 36 / 28%);
         border: none;
         font-size: 16px;
         border-radius: 5px;
         outline: 0;
         font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        border-top: 0.1px solid #f0f0f047;
+        border-left: 0.1px solid #f0f0f047;
+        border-right: 0.1px solid #f0f0f047;
+        border-bottom: 3px solid rgb(14 180 209);
+        color: white;
     }
 
+
     #output {
-        color: rgb(0, 0, 0);
+        color: rgb(255, 255, 255);
         text-align: center;
         margin-top: 30px;
     }
@@ -276,7 +290,7 @@
         font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         font-weight: 600;
         margin: 0px;
-        background: #f0f0f0;
+        /* background: #f0f0f0; */
     }
 
     .main {
@@ -284,9 +298,11 @@
         width: 80%;
         margin: auto;
         margin-top: 20px;
-        background: white;
+        background: #23272f;
         border-radius: 5px;
         padding: 10px 20px 30px 20px;
+        color: white;
+        border: 0.1px solid #f0f0f047
     }
 
     .main p {
@@ -308,7 +324,7 @@
         box-shadow: 0 1px 6px rgb(32 33 36 / 28%);
         /* box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 1px 0 rgba(0, 0, 0, 0.025); */
         cursor: pointer;
-        transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+        /* transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1); */
         -webkit-user-select: none;
         -ms-user-select: none;
         user-select: none;
