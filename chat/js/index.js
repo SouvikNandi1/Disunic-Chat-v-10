@@ -1,4 +1,4 @@
-const firebaseConfig = {
+const firebaseConfig2 = {
     apiKey: "AIzaSyAxU8cccikUyN7dYG4ToBtq2dhq7VKyC4U",
     authDomain: "disunicchatserver.firebaseapp.com",
     databaseURL: "https://disunicchatserver-default-rtdb.asia-southeast1.firebasedatabase.app",
@@ -8,7 +8,8 @@ const firebaseConfig = {
     appId: "1:549278183688:web:f01699782119c2b895fcbd",
     measurementId: "G-5EBC07JFJP"
 };
-firebase.initializeApp(firebaseConfig);
+firebase.initializeApp(firebaseConfig2);
+// const myApp1 = firebase.initializeApp(firebaseConfig2, 'config1');
 const database = firebase.database();
 const rootRef = database.ref();
 function displayUserInfo(data) {

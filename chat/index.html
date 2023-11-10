@@ -11,7 +11,8 @@
             color: rgba(231, 231, 231, 0.788);
             font-size: 13px;
         }
-        :root{
+
+        :root {
             background: black;
         }
 
@@ -24,7 +25,6 @@
             display: flex;
             height: 10%;
             background: #000000;
-            /* box-shadow: 0 1px 10px rgba(255, 255, 255, 0.28); */
             border-top: 1px solid #2f3336;
         }
 
@@ -99,6 +99,38 @@
             font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         }
 
+        .usermenu {
+            display: flex;
+            margin: auto;
+            width: 99%;
+            /* margin-top: 50px; */
+            height: 100px;
+            color: white;
+            align-items: center;
+            border-bottom: 0.1px solid #f0f0f047;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        .usermenu p {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        #upmlogo {
+            width: 70px;
+            height: 70px;
+            border-radius: 100%;
+            float: right;
+            margin-right: 10px;
+            box-shadow: 0px 0px 5px 0px #747474;
+            transition: 1s;
+            cursor: pointer;
+            object-fit: cover;
+            max-height: 100%;
+            object-position: top;
+            margin-left: 10px;
+        }
+
         .eop img {
             width: 100px;
             height: 100px;
@@ -110,6 +142,23 @@
             object-fit: cover;
             max-height: 100%;
             object-position: top;
+        }
+
+        .key {
+            display: flex;
+            width: 100%;
+            align-items: center;
+            justify-content: center;
+        }
+        .key button{
+            background: transparent;
+            border: none;
+            color: white;
+        }
+        #umkey{
+            margin-right: 10px;
+            font-weight: 700;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         }
 
         .online-user {
@@ -124,7 +173,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 </head>
 
-<body style="display: none;" id="ddddbnikjoro" onload="check2(),document.getElementById('bprivet').addEventListener('click',jkjff());djkjdkjf()">
+<body style="display: none;" id="ddddbnikjoro"
+    onload="check2(),document.getElementById('bprivet').addEventListener('click',jkjff());djkjdkjf()">
     <div id="privet" class="privet">
         <h2>Welcome To ChatWave</h2>
         <div class="search">
@@ -135,10 +185,26 @@
             <img src="" alt="" id="iope">
             <p id="oepor"></p>
         </div>
+        <div class="messagesduser">
+            
+        </div>
 
     </div>
     <div id="user-info"></div>
-    <div id="set" class="set"></div>
+    <div id="set" class="set" style="color: white;">
+        <div class="usermenu">
+            <img src="" alt="" id="upmlogo">
+            <p id="upmp"></p>
+        </div>
+        <div class="key">
+            <p id="umkey"></p>
+            <button id="copyButton" onclick="copyToClipboard()"><i style="font-size: 20px;" class="bi bi-clipboard"></i></button>
+
+        </div>
+        <div class="logout">
+            <button onclick="localStorage.removeItem('userId'),location.reload()">Log Out</button>
+        </div>
+    </div>
     <div class="bannaert">
         <button id="bprivet"><i class="bi bi-house-door-fill"></i></i></button>
         <button id="bworld"><i class="bi bi-globe-central-south-asia"></i></button>
@@ -147,6 +213,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-database.js"></script>
     <script src="./js/index.js"></script>
+    <!-- <script src="/res/js/274658648654584.js"></script> -->
     <script>
 
     </script>
@@ -196,6 +263,30 @@
             privet.style.display = "none"
             bworld.style.display = "none"
             // djkjdkjf()
+            daru()
+        }
+    </script>
+    <script>
+        function daru() {
+            const userId = localStorage.getItem("userId");
+            const userRef = database.ref(userId);
+            userRef.on("value", (snapshot) => {
+                const userData = snapshot.val();
+                if (userData) {
+                    const firstName = userData.fname;
+                    const lastName = userData.lname;
+                    const logoUrl = userData.logo;
+                    document.getElementById("upmlogo").src = logoUrl
+                    document.getElementById("upmp").innerHTML = firstName + " " + lastName
+                    document.getElementById("umkey").innerHTML = userId
+                    localStorage.setItem("upmid", userId);
+                    localStorage.setItem("upmfn", firstName);
+                    localStorage.setItem("upmln", lastName);
+                    localStorage.setItem("lgo", logoUrl);
+                } else {
+                    console.log("User not found");
+                }
+            });
         }
     </script>
     <script>
@@ -238,7 +329,6 @@
         border-radius: 0px;
         margin: auto;
         background: #000000;
-
         border-bottom: 1px solid #2f3336;
         margin-top: 10px;
         font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -314,16 +404,47 @@
         //     // Prevent navigating back
         //     window.history.pushState(null, null, window.location.href);
         // };
-            
+
         console.log("ok")
     }
     function closeApp() {
-    // Display a message to the user with instructions on how to close the app or browser.
-//     if (window.confirm("Do you want to exit this app?")) {
-//     navigator.app.exitApp(); // This method is specific to certain mobile app frameworks.
-// }
+        // Display a message to the user with instructions on how to close the app or browser.
+        //     if (window.confirm("Do you want to exit this app?")) {
+        //     navigator.app.exitApp(); // This method is specific to certain mobile app frameworks.
+        // }
 
-    // You can also add specific instructions for different platforms (e.g., Android, iOS, desktop browsers).
-}
+        // You can also add specific instructions for different platforms (e.g., Android, iOS, desktop browsers).
+    }
 
+</script>
+<script>
+    // Function to copy text to clipboard
+    function copyToClipboard() {
+        // Get the text you want to copy
+        const textToCopy = document.getElementById("umkey").textContent;
+
+        // Create a temporary input element to copy the text
+        const tempInput = document.createElement("input");
+        tempInput.value = textToCopy;
+
+        // Append the input element to the body and select the text
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        tempInput.setSelectionRange(0, 99999); // For mobile devices
+
+        // Copy the selected text to the clipboard
+        document.execCommand("copy");
+
+        // Remove the temporary input element
+        document.body.removeChild(tempInput);
+
+        // Provide some user feedback (e.g., change the button text)
+        const copyButton = document.getElementById("copyButton");
+        copyButton.innerHTML = "<i style='font-size: 20px;' class='bi bi-clipboard-check-fill'>"
+
+        // You can reset the button text after a delay (e.g., 2 seconds)
+        setTimeout(function () {
+            copyButton.innerHTML = "<i style='font-size: 20px;'' class='bi bi-clipboard'>";
+        }, 2000);
+    }
 </script>

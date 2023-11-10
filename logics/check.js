@@ -18,3 +18,11 @@ function check2(){
         console.log("ok")
     }
 }
+function check3(){
+    if (localStorage.getItem("userId") === null){
+        window.open("/login","_self")
+    }
+    else{
+        console.log("ok")
+    }
+}

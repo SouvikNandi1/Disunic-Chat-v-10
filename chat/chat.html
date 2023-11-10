@@ -9,6 +9,8 @@
     <script src="/res/js/273890448240284.js"></script>
     <script src="/login/488262609329964393943.js"></script>
     <script src="/userdetails/526.js"></script>
+    <script src="/logics/check.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <style>
         header#hjldl {
@@ -22,7 +24,7 @@
     </style>
 </head>
 
-<body onload="setTimeout(() => {
+<body onload="check3(),setTimeout(() => {
     scrollToBottom()
 }, 200);setTimeout(() => {
     document.getElementById('hjldl').style.display='block'
@@ -40,9 +42,15 @@
         Disunic Logic "Don't Try to Copy this!!!"
     </header>
     <div id="chat">
-        <div id="messages" class="message-container"></div>
+        <div id="messages" class="message-container">
+        </div>
+
         <form id="message-form">
-            <div class="bar">
+            <button style="display: none;" id="uritpt" onclick="document.getElementById('uritpt').style.display='none',setTimeout(() => {scrollToBottom(),dklde()}, 100),window.scrollTo(0,document.body.scrollHeight),setTimeout(() => {
+            buttoniopi(),
+            checkinp()
+        }, 10);">Disunic AI</button>
+            <div class="bar" id="bar2">
                 <input onkeyup="checkinp()" id="message-input" type="text" placeholder="Type Your Message....."
                     autocomplete="off" />
                 <button disabled id="message-btn"
@@ -73,6 +81,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-database.js"></script>
     <script src="/res/js/274658648654584.js"></script>
+    <script src="/ai/disunicwiki.js"></script>
     <script>
         let imk = document.getElementById("hjldl")
         imk.innerHTML = `
@@ -83,13 +92,55 @@
             `
     </script>
     <script>
-        
+
     </script>
 </body>
 
 </html>
 
 <style>
+    .hgj {
+        width: 85%;
+        margin: auto;
+        
+    }
+    .hgj img{
+        width: -webkit-fill-available;
+        border-radius: 5px;
+        box-shadow: 2px 3px 6px 1px rgb(255 255 255 / 28%);
+    }
+
+    .user {
+        display: none !important;
+    }
+
+    .bot {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        padding: 5px 15px 5px 15px;
+        background: rgb(81 81 81 / 0%);
+        text-align: left;
+        width: 80%;
+        margin: auto;
+        margin-top: 15px;
+        margin-bottom: 15px;
+        border-radius: 8px;
+        color: #ffffff;
+        animation: popup 200ms;
+        box-shadow: 2px 3px 6px 1px rgb(255 255 255 / 28%);
+    }
+
+    button#uritpt {
+        background: transparent;
+        color: white;
+        border: none;
+        padding: 10px 10px;
+        border-radius: 10px;
+        margin-left: 10px;
+        margin-top: 6px;
+        font-size: 14px;
+        border: 1px solid #9d9d9d;
+    }
+
     ::placeholder {
         color: rgb(192, 192, 192)ea;
     }
@@ -108,7 +159,10 @@
         height: 85%;
         width: 100%;
         overflow-y: auto;
-        background: #23272f !important;
+        background-color: #23272f !important;
+        /* background: url(/bg.jpg); */
+        /* background-position: center;
+        background-blend-mode: hard-light; */
     }
 
     form#message-form {
@@ -120,8 +174,9 @@
         height: 15%;
         justify-content: center;
         align-items: center;
-        display: flex;
+        /* display: flex; */
         border-top: 1px solid #69a5cb2a;
+        transition: 300ms;
     }
 
     .bar {
@@ -138,6 +193,7 @@
         padding: 0px 10px 0px 10px;
         border-top-right-radius: 8px;
         border-top-left-radius: 8px;
+        margin-top: 20px;
     }
 
     input#message-input {
@@ -237,12 +293,24 @@
             opacity: 100%;
         }
     }
+
     @keyframes kdlori {
-        0%{
+        0% {
             margin-top: 0px;
         }
-        100%{
+
+        100% {
             margin-top: 86px;
         }
     }
 </style>
+<script>
+    function kshdi() {
+        if (localStorage.getItem("userId") === localStorage.getItem("RID")) {
+            console.log("OKTYU")
+        }
+        else {
+            console.log("Haaaaa")
+        }
+    }
+</script>
