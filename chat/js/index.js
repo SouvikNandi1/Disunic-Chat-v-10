@@ -1,13 +1,13 @@
 const firebaseConfig2 = {
-    apiKey: "AIzaSyAxU8cccikUyN7dYG4ToBtq2dhq7VKyC4U",
-    authDomain: "disunicchatserver.firebaseapp.com",
-    databaseURL: "https://disunicchatserver-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "disunicchatserver",
-    storageBucket: "disunicchatserver.appspot.com",
-    messagingSenderId: "549278183688",
-    appId: "1:549278183688:web:f01699782119c2b895fcbd",
-    measurementId: "G-5EBC07JFJP"
-};
+    apiKey: "AIzaSyBYsA58ozyd8LgHfOHCB_yL1l7Bqz045H8",
+    authDomain: "disuniccore.firebaseapp.com",
+    databaseURL: "https://disuniccore-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "disuniccore",
+    storageBucket: "disuniccore.appspot.com",
+    messagingSenderId: "953385510885",
+    appId: "1:953385510885:web:88d87771468a1fd13cb10c",
+    measurementId: "G-0GF9CE0R5T"
+  };
 firebase.initializeApp(firebaseConfig2);
 // const myApp1 = firebase.initializeApp(firebaseConfig2, 'config1');
 const database = firebase.database();

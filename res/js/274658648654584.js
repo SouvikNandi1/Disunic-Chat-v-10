@@ -22,10 +22,21 @@ function opih() {
         document.querySelectorAll('.sent').style.transition = "1s"
     }
 }
-firebase.initializeApp(firebaseConfig);
+const firebaseConfig5 = {
+    apiKey: "AIzaSyAxU8cccikUyN7dYG4ToBtq2dhq7VKyC4U",
+    authDomain: "disunicchatserver.firebaseapp.com",
+    databaseURL: "https://disunicchatserver-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "disunicchatserver",
+    storageBucket: "disunicchatserver.appspot.com",
+    messagingSenderId: "549278183688",
+    appId: "1:549278183688:web:f01699782119c2b895fcbd",
+    measurementId: "G-5EBC07JFJP"
+  };
+// firebase.initializeApp(firebaseConfig);
+const myApp7 = firebase.initializeApp(firebaseConfig5, 'config1');
 // const myApp2 = firebase.initializeApp(firebaseConfig6, 'config1');
 
-const db = firebase.database();
+const db = myApp7.database();
 
 
 let userid = localStorage.getItem("userId");
